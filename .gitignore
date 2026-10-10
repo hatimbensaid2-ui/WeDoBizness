@@ -1,0 +1,20 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# Node (build tooling for regenerating PDFs/ad images)
+node_modules/
+npm-debug.log*
+
+# Local render scratch
+_preview*.png
+_contact.png
+*.tmp
+
+# Secrets — never commit
+.env
+*.local
+stripe-keys*.txt
