@@ -205,6 +205,99 @@
   footer a:hover{color:var(--orange)}
   .fbottom{margin-top:38px;padding-top:22px;border-top:1px solid var(--line-d);font-family:'Archivo';font-size:12px;letter-spacing:.02em;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;align-items:center}
   .fcur{font-family:'Archivo';font-size:12px;font-weight:700;color:#fff;background:var(--brown-2);border:1px solid var(--line-d);border-radius:8px;padding:6px 11px;cursor:pointer}
+
+  /* Responsive layout: keep content within the actual viewport, not just hidden. */
+  html, body{width:100%;max-width:100%}
+  .wrap, nav, .case, .case > *, .ctiles, .ctile, .apply, .apply > *, .calendar-col, .rgrid, .rev, .offers, .offer, .cards4, .mcard{min-width:0}
+  .case .who, .case .who p, .case .who .mk{overflow-wrap:break-word}
+  .case{grid-template-columns:minmax(0,1fr) minmax(0,1.4fr)}
+  .ctiles{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .ctile .n{overflow-wrap:anywhere}
+  .apply{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .calendar-col{width:100%;min-width:0}
+  .calendly-inline-widget{width:100%;min-width:320px;max-width:100%;height:680px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--card)}
+  .mobile-booking{display:none}
+  summary{align-items:flex-start;line-height:1.4;overflow-wrap:break-word}
+  summary::after{flex:0 0 16px;text-align:right}
+  .proof-copy{min-width:0}
+
+  @media(max-width:920px){
+    nav{gap:10px}
+    .navright{flex-shrink:0;gap:6px}
+  }
+  @media(max-width:820px){
+    .apply{grid-template-columns:minmax(0,1fr)}
+  }
+  @media(max-width:760px){
+    section{padding:54px 0}
+    .wrap{padding-left:18px;padding-right:18px}
+    .case{grid-template-columns:minmax(0,1fr);gap:18px;padding:22px}
+    .case .who .mk{line-height:1.5}
+    .ctiles{gap:10px}
+    .ctile{padding:14px 9px}
+    .ctile .n{font-size:clamp(19px,5vw,26px)}
+    .apply{gap:22px;padding:22px}
+    .hero{padding:52px 0 44px}
+    .hero h1{font-size:clamp(35px,9.6vw,58px)}
+    .hero .badge{max-width:100%;text-align:center;justify-content:center;line-height:1.35}
+    .strip{font-size:11px;line-height:1.4;padding:8px 12px}
+    .proof-line{display:grid;grid-template-columns:auto auto;column-gap:12px;row-gap:8px;justify-content:center;justify-items:center;margin-top:27px}
+    .proof-line .proof-copy{grid-column:1/-1;max-width:36ch;line-height:1.5;text-align:center}
+    .proof-line .av{padding-left:7px}
+    .proof-line .av span{flex-shrink:0}
+    .proof-line .stars{white-space:nowrap}
+    .stats{gap:26px 14px;padding:34px 0}
+    .stat .n{font-size:clamp(26px,7vw,44px)}
+  }
+  @media(max-width:600px){
+    /* Calendly's inline calendar has a hard 320px minimum. On phones its
+       native mobile scheduler works better than a clipped embedded iframe. */
+    .calendly-inline-widget{display:none}
+    .mobile-booking{display:block;background:var(--cream);padding:24px 18px;border:1px solid var(--line);border-radius:16px;text-align:center}
+    .mobile-booking-label{font-family:'Archivo',sans-serif;font-size:21px;line-height:1.2;font-weight:800}
+    .mobile-booking p{font-size:14px;color:#6b5844;margin:11px 0 23px;line-height:1.55}
+    .mobile-booking .btn{justify-content:center;width:100%;font-size:15px;padding:15px 12px}
+  }
+  @media(max-width:520px){
+    nav{height:62px;gap:6px}
+    .brand{flex:0 1 auto;min-width:0}
+    .brand-logo{width:clamp(125px,39vw,165px);max-width:100%;height:auto}
+    .navright{gap:4px}
+    .navright .btn{font-size:12px;line-height:1.1;padding:10px 10px;text-align:center;box-shadow:0 4px 0 #c22f10}
+    .hamburger{width:38px;min-width:38px;height:44px;align-items:center;justify-content:center;padding:7px}
+    .hamburger span{width:22px}
+    .mobilemenu{padding-bottom:18px}
+    .hero .badge{font-size:11px;gap:6px;padding:7px 10px}
+    .hero .badge .stars{font-size:12px;letter-spacing:0}
+    .hero p.sub{margin-top:19px;font-size:16px}
+    .hero h1{font-size:clamp(35px,9.6vw,50px);max-width:100%}
+    .cta-row{gap:10px;margin-top:26px}
+    .cta-row .btn{width:100%;justify-content:center;font-size:15px;padding:14px 12px}
+    .case{padding:18px 16px}
+    .ctiles{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+    .ctile:last-child{grid-column:1/-1}
+    .ctile .n{font-size:clamp(20px,6vw,25px)}
+    .ctile .l{font-size:10px}
+    .case .who .clogo img{max-width:100%}
+    .apply{padding:18px 16px}
+    .sec-head p{font-size:16px}
+    .offer{padding:23px}
+    summary{gap:14px;font-size:16px}
+    details p{font-size:14px}
+    .fgrid{gap:30px}
+    .fbottom{gap:16px}
+  }
+  @media(max-width:360px){
+    .wrap{padding-left:14px;padding-right:14px}
+    nav{gap:4px}
+    .brand-logo{width:126px}
+    .navright .btn{font-size:11px;padding:10px 8px}
+    .hamburger{width:34px;min-width:34px;padding:5px}
+    .strip{font-size:10px}
+    .apply{padding:16px 14px}
+    .case{padding:16px 14px}
+  }
+
 </style>
 </head>
 <body>
@@ -254,7 +347,7 @@
     <div class="proof-line">
       <span class="av"><span></span><span></span><span></span><span></span></span>
       <span class="stars">★★★★★</span>
-      <span>Scaling brands across the US, Europe, Australia and beyond</span>
+      <span class="proof-copy">Scaling brands across the US, Europe, Australia and beyond</span>
     </div>
   </div>
 </section>
@@ -481,10 +574,15 @@
           <div style="display:flex;gap:10px;align-items:center"><span class="check">✓</span><span style="font-size:14.5px">No obligation</span></div>
         </div>
       </div>
-      <div>
-        <!-- Calendly inline widget begin -->
-        <div class="calendly-inline-widget" data-url="https://calendly.com/agenciaoff/30min?hide_gdpr_banner=1&primary_color=ff461f" style="min-width:320px;width:100%;height:680px;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--card)"></div>
-        <!-- Calendly inline widget end -->
+      <div class="calendar-col">
+        <!-- The embedded Calendly calendar needs at least 320px of clear space.
+             On small phones, use its native mobile booking experience instead. -->
+        <div class="calendly-inline-widget" data-url="https://calendly.com/agenciaoff/30min?hide_gdpr_banner=1&primary_color=ff461f"></div>
+        <div class="mobile-booking">
+          <div class="mobile-booking-label">Ready to discuss your store?</div>
+          <p>Choose a time that works for you. The booking calendar opens in a new tab.</p>
+          <a class="btn orange big" href="https://calendly.com/agenciaoff/30min" target="_blank" rel="noopener noreferrer">Choose a time <span aria-hidden="true">↗</span></a>
+        </div>
       </div>
     </div>
   </div>
@@ -632,12 +730,13 @@ document.querySelectorAll("[data-checkout]").forEach(b=>{ b.addEventListener("cl
 
 /* Calendly inline */
 function initCalendly(){
-  var el = document.querySelector(".calendly-inline-widget"); if(!el) return;
+  var el = document.querySelector(".calendly-inline-widget"); if(!el || window.matchMedia("(max-width: 600px)").matches) return;
   if(el.querySelector("iframe")) return;
   if(window.Calendly && Calendly.initInlineWidget){ Calendly.initInlineWidget({ url: el.getAttribute("data-url"), parentElement: el }); setTimeout(initCalendly, 1200); }
   else { setTimeout(initCalendly, 400); }
 }
 window.addEventListener("load", function(){ setTimeout(initCalendly, 300); });
+window.addEventListener("resize", function(){ if(window.innerWidth > 600) initCalendly(); });
 
 /* Mobile menu */
 (function(){
