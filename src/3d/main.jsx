@@ -6,7 +6,7 @@
  *
  * Rebuild after edits:  cd src/3d && npm install && npm run build
  */
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
@@ -40,6 +40,15 @@ function Frameloop({ active }) {
   return null
 }
 
+/* Production setting: skip three.js shader error checks. Those checks call
+   getProgramInfoLog, which forces the browser to finish compiling synchronously (a long freeze);
+   without them, shaders compile in parallel/background. */
+function FastShaders() {
+  const gl = useThree((s) => s.gl)
+  useLayoutEffect(() => { gl.debug.checkShaderErrors = false }, [gl])
+  return null
+}
+
 /* ------------------------------------------------------------------ *
  * Hero: ShaderGradient (built on React Three Fiber)
  * ------------------------------------------------------------------ */
@@ -56,7 +65,9 @@ function HeroGradient({ host, onReady }) {
       fov={45}
       pointerEvents="none"
       powerPreference="low-power"
+      lazyLoad={false} // built-in lazyLoad destroys/recreates the WebGL context on every scroll past; we pause instead
     >
+      <FastShaders />
       <Frameloop active={visible} />
       <ShaderGradient
         control="props"
@@ -133,7 +144,7 @@ function Mark({ geometry, color, position, scale, speed, phase, pointer }) {
   })
   return (
     <mesh ref={ref} geometry={geometry} position={position} scale={scale} castShadow>
-      <meshStandardMaterial color={color} roughness={0.32} metalness={0.15} />
+      <meshLambertMaterial color={color} /> {/* Lambert: far cheaper to compile/render than PBR, same look for a flat brand mark */}
     </mesh>
   )
 }
@@ -160,6 +171,7 @@ function MarkScene({ host }) {
       gl={{ antialias: true, alpha: true, powerPreference: 'low-power' }}
       style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}
     >
+      <FastShaders />
       <Frameloop active={visible} />
       <ambientLight intensity={1.6} />
       <directionalLight position={[4, 6, 8]} intensity={2.4} />

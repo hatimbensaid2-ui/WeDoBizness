@@ -52,23 +52,27 @@ The site is a static, self-contained page.
 
 External dependencies load from CDN at runtime: Google Fonts, Calendly widget, Stripe (via links). The Calendly calendar only renders on a live http(s) domain, not from a local file.
 
-## Motion (smooth scroll + animations)
+## Motion, 3D and speed
 
-Every page loads a shared motion layer:
+**Every page:** Lenis smooth scroll + GSAP scroll reveals (`assets/motion.js`), a CSS hero intro (in `assets/motion.css`, inlined into each page), count-up stats, scroll progress bar, magnetic CTA buttons.
 
-- `assets/vendor/`: self-hosted Lenis 1.3.27 and GSAP 3.15.0 (core, ScrollTrigger, SplitText). No CDN needed.
-- `assets/motion.css`: Lenis base CSS, header shadow, scroll progress bar.
-- `assets/motion.js`: Lenis smooth scroll (with header-offset anchor links), hero intro with line-by-line headline reveal, staggered scroll reveals, count-up stats, magnetic CTA buttons on desktop.
+**Homepage extras** (`assets/fx.css` + `assets/fx.js`):
+- **Hero:** a soft CSS brand glow on every device. On desktops, an animated [ShaderGradient](https://github.com/ruucm/shadergradient) fades in over it.
+- **3D logo marks** ([React Three Fiber](https://github.com/pmndrs/react-three-fiber)) in the orange "steroids" band, desktop only.
+- **Floating CTA pill:** frosted CSS glass everywhere. On strong desktops it upgrades to real WebGL refraction ([liquid-glass-js](https://github.com/dashersw/liquid-glass-js)).
 
-Homepage extras (`assets/fx.css` + `assets/fx.js`, loaded only on `index.html`):
+### Speed rules (verified with Lighthouse: home mobile 99, desktop 100, same as before the effects)
+- Nothing above the fold waits for JavaScript. The hero intro is pure CSS and the headline is never hidden, so it paints on the first frame.
+- All JS (Lenis, GSAP, motion.js, fx.js) loads **after** the page has loaded and its main content has painted (small inline loader at the bottom of each page).
+- 3D only on desktop-class machines (mouse, 900px+ wide, 4+ cores, 4GB+ RAM), loaded on first interaction or after 3.5s of quiet, paused when off screen.
+- WebGL glass only on 8+ core / 8GB+ desktops, and its one-off page snapshot runs only while the visitor is idle.
+- Phones, reduced-motion and data-saver visitors get zero WebGL.
+- CSS/JS URLs carry `?v=<hash>` and `.htaccess` caches them for a year (HTML always revalidates).
 
-- **Hero gradient:** an animated [ShaderGradient](https://github.com/ruucm/shadergradient) in brand orange, cream and peach behind the headline.
-- **3D logo marks:** the growth-arrow mark extruded in 3D with [React Three Fiber](https://github.com/pmndrs/react-three-fiber), floating in the orange "steroids" band (desktop only).
-- **Liquid glass CTA:** a floating "Apply / $29 playbook" pill using [liquid-glass-js](https://github.com/dashersw/liquid-glass-js) for real WebGL refraction on desktop, with a frosted CSS-glass fallback on phones.
-
-The gradient and marks are compiled into `assets/vendor/wdb-3d.js` from `src/3d/main.jsx`. It loads lazily after the page is ready and pauses when off screen. To change colors or motion, edit `src/3d/main.jsx`, then run `cd src/3d && npm install && npm run build`. `src/` does not need to be uploaded to the server.
-
-Visitors with "reduce motion" turned on get plain, instant scrolling and no reveals (and no 3D or WebGL glass). If the scripts ever fail to load, content still shows after 2.5s. Upload the `assets/` folder together with the HTML files when deploying.
+### Editing
+- After changing any CSS/JS in `assets/`, run `python3 src/stamp_assets.py` (refreshes version hashes and the inlined motion CSS).
+- 3D source is `src/3d/main.jsx`; rebuild with `cd src/3d && npm install && npm run build`, then run the stamp script.
+- Deploy: upload the HTML files, `.htaccess` and the whole `assets/` folder. `src/` stays off the server.
 
 ## Guide delivery (digital product)
 

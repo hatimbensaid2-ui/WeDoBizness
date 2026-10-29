@@ -1,7 +1,25 @@
 /* WeDoBizness homepage FX: ShaderGradient hero, R3F logo marks, liquid glass CTA */
 
-/* ---- Hero gradient (ShaderGradient) ---- */
+/* ---- Hero glow: pure CSS, every device. Animates transform only (GPU compositor, no repaints) ---- */
 .hero { position: relative; overflow: hidden; isolation: isolate; }
+.hero::before {
+  content: ""; position: absolute; inset: -25%; z-index: -2; pointer-events: none;
+  background:
+    radial-gradient(38% 42% at 88% 18%, rgba(255,70,31,.55) 0%, rgba(255,70,31,0) 70%),
+    radial-gradient(34% 40% at 10% 82%, rgba(255,140,100,.45) 0%, rgba(255,140,100,0) 70%),
+    radial-gradient(30% 34% at 18% 12%, rgba(255,199,176,.55) 0%, rgba(255,199,176,0) 70%),
+    radial-gradient(36% 40% at 92% 88%, rgba(255,120,80,.35) 0%, rgba(255,120,80,0) 70%);
+  will-change: transform;
+  animation: wdbGlow 22s ease-in-out infinite alternate;
+}
+@keyframes wdbGlow {
+  0%   { transform: translate3d(0, 0, 0) rotate(0deg) scale(1); }
+  50%  { transform: translate3d(-3%, 2%, 0) rotate(6deg) scale(1.06); }
+  100% { transform: translate3d(2%, -2%, 0) rotate(-4deg) scale(1.02); }
+}
+@media (prefers-reduced-motion: reduce) { .hero::before { animation: none; } }
+
+/* ---- Hero gradient (ShaderGradient, desktop only, fades in over the CSS glow) ---- */
 .wdb-hero-bg {
   position: absolute; inset: 0; z-index: -1; pointer-events: none;
   opacity: 0; transition: opacity 1.4s ease;

@@ -18,18 +18,18 @@ html.lenis body { height: auto; }
 /* Lenis drives the scroll, so native smooth scroll must be off */
 html.lenis { scroll-behavior: auto !important; }
 
-/* Hide above-the-fold elements until motion.js has set their start state.
-   wdb-ready is also added by a 2.5s failsafe in <head>, so content never stays hidden. */
-html.wdb-js:not(.wdb-ready) .hero .badge,
-html.wdb-js:not(.wdb-ready) .hero .eyebrow,
-html.wdb-js:not(.wdb-ready) .hero h1,
-html.wdb-js:not(.wdb-ready) .hero .sub,
-html.wdb-js:not(.wdb-ready) .hero .intro,
-html.wdb-js:not(.wdb-ready) .hero .cta-row,
-html.wdb-js:not(.wdb-ready) .hero .proof-line { opacity: 0; }
-
-/* SplitText line masks */
-.wdb-line { padding-bottom: .06em; margin-bottom: -.06em; }
+/* Hero intro: pure CSS, plays on the very first frame with no JavaScript.
+   Headline + intro text only rise (never hidden), so they count as painted instantly (fast LCP). */
+@keyframes wdbRise { from { transform: translateY(24px); } to { transform: none; } }
+@keyframes wdbFadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+.hero .badge, .hero .eyebrow { animation: wdbFadeUp .6s cubic-bezier(.22,1,.36,1) both; }
+.hero h1 { animation: wdbRise 1s cubic-bezier(.22,1,.36,1) both; }
+.hero .sub, .hero .intro { animation: wdbRise .9s .15s cubic-bezier(.22,1,.36,1) both; }
+.hero .cta-row { animation: wdbFadeUp .8s .3s cubic-bezier(.22,1,.36,1) both; }
+.hero .proof-line { animation: wdbFadeUp .8s .42s cubic-bezier(.22,1,.36,1) both; }
+@media (prefers-reduced-motion: reduce) {
+  .hero .badge, .hero .eyebrow, .hero h1, .hero .sub, .hero .intro, .hero .cta-row, .hero .proof-line { animation: none; }
+}
 
 /* Header gets a soft shadow once the page is scrolled */
 header, .nav { transition: box-shadow .3s ease; }

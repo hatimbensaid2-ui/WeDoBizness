@@ -1,4 +1,4 @@
-/* liquid-glass-js by dashersw (MIT), https://github.com/dashersw/liquid-glass-js. Patched for WeDoBizness: onclone/ignore hooks, no console logs. */
+/* liquid-glass-js by dashersw (MIT), https://github.com/dashersw/liquid-glass-js. Patched for WeDoBizness: onclone/ignore hooks, snapshotScale, direct canvas texture, no console logs. */
 class Container {
   static instances = []
   static pageSnapshot = null
@@ -193,7 +193,8 @@ class Container {
 
   capturePageSnapshot() {
     html2canvas(document.body, {
-      scale: 1,
+      logging: false, // WeDoBizness patch
+      scale: Container.snapshotScale || 1, // WeDoBizness patch: lower-res snapshot is much faster
       useCORS: true,
       allowTaint: true,
       backgroundColor: null,
@@ -235,12 +236,9 @@ class Container {
   initWebGL() {
     if (!Container.pageSnapshot || !this.gl) return
 
-    const img = new Image()
-    img.src = Container.pageSnapshot.toDataURL()
-    img.onload = () => {
-      this.setupShader(img)
-      this.webglInitialized = true
-    }
+    // WeDoBizness patch: upload the snapshot canvas directly (skips a slow PNG encode/decode)
+    this.setupShader(Container.pageSnapshot)
+    this.webglInitialized = true
   }
 
   setupShader(image) {
@@ -608,7 +606,7 @@ class Container {
 
     // Set uniforms
     gl.uniform2f(resolutionLoc, this.canvas.width, this.canvas.height)
-    gl.uniform2f(textureSizeLoc, image.width, image.height)
+    gl.uniform2f(textureSizeLoc, image.width / (Container.snapshotScale || 1), image.height / (Container.snapshotScale || 1)) // page size in CSS px
     gl.uniform1f(blurRadiusLoc, window.glassControls?.blurRadius || 5.0)
     gl.uniform1f(borderRadiusLoc, this.borderRadius)
     gl.uniform1f(warpLoc, this.warp ? 1.0 : 0.0)

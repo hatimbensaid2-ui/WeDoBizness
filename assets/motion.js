@@ -1,7 +1,7 @@
 /*
  * WeDoBizness motion layer
- * Lenis smooth scroll + GSAP (ScrollTrigger, SplitText) reveals.
- * Loaded on every page after /assets/vendor/{lenis,gsap,ScrollTrigger,SplitText}.min.js
+ * Lenis smooth scroll + GSAP (ScrollTrigger) reveals.
+ * Loaded after the page has finished loading (inline loader in each page), after /assets/vendor/{lenis,gsap,ScrollTrigger}.min.js
  */
 (function () {
   var root = document.documentElement;
@@ -11,7 +11,6 @@
   if (!window.gsap || !window.ScrollTrigger) { ready(); return; }
 
   gsap.registerPlugin(ScrollTrigger);
-  if (window.SplitText) gsap.registerPlugin(SplitText);
 
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -82,44 +81,11 @@
   if (reduce) { ready(); refreshOnLayoutChange(); return; }
 
   /* ---------------------------------------------------------------
-   * 3. Hero intro
+   * 3. Hero parallax (intro animation lives in motion.css)
    * ------------------------------------------------------------- */
   var hero = $('.hero');
   if (hero) {
-    var lead = $$('.badge, .eyebrow', hero);
-    var h1 = $('h1', hero);
-    var after = $$('.sub, .intro, .cta-row, .proof-line', hero);
-
-    gsap.set(lead.concat(after), { autoAlpha: 0, y: 22 });
-    if (h1 && !window.SplitText) gsap.set(h1, { autoAlpha: 0, y: 30 });
-
-    var tl = gsap.timeline({ defaults: { ease: 'power3.out', duration: 0.8 }, delay: 0.1 });
-    if (lead.length) tl.to(lead, { autoAlpha: 1, y: 0, duration: 0.6 });
-
-    if (h1 && window.SplitText) {
-      var first = true;
-      SplitText.create(h1, {
-        type: 'lines',
-        mask: 'lines',
-        linesClass: 'wdb-line',
-        autoSplit: true,
-        onSplit: function (self) {
-          var tween = gsap.from(self.lines, {
-            yPercent: 110,
-            duration: 1.05,
-            stagger: 0.11,
-            ease: 'power4.out',
-            delay: first ? 0.25 : 0
-          });
-          first = false;
-          return tween;
-        }
-      });
-      tl.to(after, { autoAlpha: 1, y: 0, stagger: 0.1 }, 0.75);
-    } else {
-      if (h1) tl.to(h1, { autoAlpha: 1, y: 0, duration: 0.9 }, '-=0.3');
-      tl.to(after, { autoAlpha: 1, y: 0, stagger: 0.1 }, '-=0.5');
-    }
+    // The intro itself is pure CSS (motion.css) so it plays before any JS loads.
 
     // Gentle parallax fade as the hero leaves the viewport (tall heroes only)
     var heroWrap = $('.wrap', hero);
@@ -150,8 +116,11 @@
     '.foot .footinner > *', '.foot .copyright'
   ].join(',');
 
+  // motion.js loads after the page, so only hide what the visitor hasn't reached yet
+  var fold = window.innerHeight;
   var candidates = $$(revealSel).filter(function (el) {
     if (hero && hero.contains(el)) return false;
+    if (el.getBoundingClientRect().top < fold) return false;
     if (el.closest('.mobilemenu, .navlist')) return false;
     return true;
   });
@@ -192,6 +161,7 @@
     if (!m) return;
     var prefix = m[1], numStr = m[2], suffix = m[3];
     if (!prefix && !suffix && /^(19|20)\d\d$/.test(numStr)) return; // years stay static
+    if (el.getBoundingClientRect().top < window.innerHeight) return; // already seen
     var target = parseFloat(numStr.replace(/,/g, ''));
     if (!isFinite(target) || target === 0) return;
     var decimals = (numStr.split('.')[1] || '').length;

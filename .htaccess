@@ -1,0 +1,21 @@
+# WeDoBizness: speed settings for Hostinger (LiteSpeed / Apache)
+
+# Compress text files
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/javascript text/javascript application/json image/svg+xml application/xml
+</IfModule>
+
+<IfModule mod_headers.c>
+  # CSS/JS are cache-busted with ?v=<hash> (src/stamp_assets.py), so they can be cached for a year
+  <FilesMatch "\.(js|css)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  # Images, icons and fonts: 30 days
+  <FilesMatch "\.(png|jpe?g|webp|avif|gif|svg|ico|woff2?)$">
+    Header set Cache-Control "public, max-age=2592000"
+  </FilesMatch>
+  # HTML always revalidates so edits show up right away
+  <FilesMatch "\.html?$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>
