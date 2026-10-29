@@ -202,6 +202,7 @@
       return prefix + s + suffix;
     };
     var obj = { v: 0 };
+    el.setAttribute('data-final', raw); // used by the glass snapshot (fx.js)
     el.textContent = fmt(0);
     ScrollTrigger.create({
       trigger: el,

@@ -1,0 +1,67 @@
+/* WeDoBizness homepage FX: ShaderGradient hero, R3F logo marks, liquid glass CTA */
+
+/* ---- Hero gradient (ShaderGradient) ---- */
+.hero { position: relative; overflow: hidden; isolation: isolate; }
+.wdb-hero-bg {
+  position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  opacity: 0; transition: opacity 1.4s ease;
+}
+.wdb-hero-bg.is-ready { opacity: 1; }
+/* Cream veil keeps the headline crisp over the moving colors */
+.wdb-hero-bg::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 62% at 50% 46%, rgba(244,238,230,.86) 0%, rgba(244,238,230,.55) 48%, rgba(244,238,230,0) 78%),
+    linear-gradient(to bottom, rgba(244,238,230,0) 70%, rgba(244,238,230,.5) 100%);
+}
+.wdb-hero-bg canvas { display: block; }
+
+/* ---- Steroid band logo marks (React Three Fiber) ---- */
+.steroid { position: relative; overflow: hidden; isolation: isolate; }
+.wdb-marks {
+  position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  opacity: 0; transition: opacity 1s ease;
+}
+.wdb-marks.is-ready { opacity: 1; }
+@media (max-width: 899px) { .wdb-marks { display: none; } }
+
+/* ---- Floating liquid glass CTA ---- */
+.wdb-glass-cta {
+  position: fixed; left: 50%; bottom: 22px; z-index: 90;
+  transform: translateX(-50%);
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px !important;
+  border-radius: 999px;
+  visibility: hidden; opacity: 0;
+}
+.wdb-glass-cta a {
+  position: relative; z-index: 1;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  height: 44px; padding: 0 20px; border-radius: 999px;
+  font-family: 'Archivo', Arial, sans-serif; font-weight: 800; font-size: 14px; letter-spacing: .01em;
+  text-decoration: none; white-space: nowrap;
+  transition: transform .15s ease, background-color .15s ease;
+}
+.wdb-glass-cta a:hover { transform: translateY(-1px); }
+.wdb-glass-cta .go { background: var(--orange, #FF461F); color: #fff; box-shadow: 0 3px 0 #c22f10; }
+.wdb-glass-cta .go:hover { background: var(--orange-2, #FD4F13); }
+.wdb-glass-cta .alt { background: rgba(255,255,255,.72); color: var(--brown, #270F04); }
+.wdb-glass-cta .alt:hover { background: rgba(255,255,255,.92); }
+
+/* CSS glass fallback (no WebGL, page too tall for the GPU, or still loading) */
+.wdb-glass-cta.is-css {
+  background: rgba(251, 246, 239, .38);
+  -webkit-backdrop-filter: blur(14px) saturate(1.6);
+  backdrop-filter: blur(14px) saturate(1.6);
+  border: 1px solid rgba(255,255,255,.55);
+  box-shadow: 0 18px 40px rgba(39,15,4,.18), inset 0 1px 0 rgba(255,255,255,.7);
+}
+/* Once the WebGL glass is live, its canvas is the surface */
+.wdb-glass-cta.is-webgl { background: transparent; border: 0; box-shadow: none; }
+.wdb-glass-cta.is-webgl > canvas { box-shadow: 0 18px 40px rgba(39,15,4,.22) !important; }
+
+@media (max-width: 480px) {
+  .wdb-glass-cta { bottom: 14px; gap: 6px; padding: 6px !important; }
+  .wdb-glass-cta a { height: 42px; padding: 0 15px; font-size: 13px; }
+}
+@media print { .wdb-glass-cta, .wdb-hero-bg, .wdb-marks { display: none !important; } }

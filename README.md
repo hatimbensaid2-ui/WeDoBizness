@@ -60,7 +60,15 @@ Every page loads a shared motion layer:
 - `assets/motion.css`: Lenis base CSS, header shadow, scroll progress bar.
 - `assets/motion.js`: Lenis smooth scroll (with header-offset anchor links), hero intro with line-by-line headline reveal, staggered scroll reveals, count-up stats, magnetic CTA buttons on desktop.
 
-Visitors with "reduce motion" turned on get plain, instant scrolling and no reveals. If the scripts ever fail to load, content still shows after 2.5s. Upload the `assets/` folder together with the HTML files when deploying.
+Homepage extras (`assets/fx.css` + `assets/fx.js`, loaded only on `index.html`):
+
+- **Hero gradient:** an animated [ShaderGradient](https://github.com/ruucm/shadergradient) in brand orange, cream and peach behind the headline.
+- **3D logo marks:** the growth-arrow mark extruded in 3D with [React Three Fiber](https://github.com/pmndrs/react-three-fiber), floating in the orange "steroids" band (desktop only).
+- **Liquid glass CTA:** a floating "Apply / $29 playbook" pill using [liquid-glass-js](https://github.com/dashersw/liquid-glass-js) for real WebGL refraction on desktop, with a frosted CSS-glass fallback on phones.
+
+The gradient and marks are compiled into `assets/vendor/wdb-3d.js` from `src/3d/main.jsx`. It loads lazily after the page is ready and pauses when off screen. To change colors or motion, edit `src/3d/main.jsx`, then run `cd src/3d && npm install && npm run build`. `src/` does not need to be uploaded to the server.
+
+Visitors with "reduce motion" turned on get plain, instant scrolling and no reveals (and no 3D or WebGL glass). If the scripts ever fail to load, content still shows after 2.5s. Upload the `assets/` folder together with the HTML files when deploying.
 
 ## Guide delivery (digital product)
 

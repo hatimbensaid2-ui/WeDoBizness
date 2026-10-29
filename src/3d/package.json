@@ -1,0 +1,21 @@
+{
+  "name": "wedobizness-3d",
+  "private": true,
+  "description": "Source for assets/vendor/wdb-3d.js (hero ShaderGradient + React Three Fiber logo mark). Run: npm install && npm run build",
+  "scripts": {
+    "build": "esbuild main.jsx --bundle --minify --format=iife --target=es2019 --legal-comments=none --define:process.env.NODE_ENV=\\\"production\\\" --outfile=../../assets/vendor/wdb-3d.js"
+  },
+  "dependencies": {
+    "@react-three/fiber": "^9.8.2",
+    "@shadergradient/react": "^2.4.20",
+    "camera-controls": "^3.1.2",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "three": "^0.186.1",
+    "three-stdlib": "^2.36.1"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "html2canvas": "^1.4.1"
+  }
+}
