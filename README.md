@@ -52,6 +52,16 @@ The site is a static, self-contained page.
 
 External dependencies load from CDN at runtime: Google Fonts, Calendly widget, Stripe (via links). The Calendly calendar only renders on a live http(s) domain, not from a local file.
 
+## Motion (smooth scroll + animations)
+
+Every page loads a shared motion layer:
+
+- `assets/vendor/`: self-hosted Lenis 1.3.27 and GSAP 3.15.0 (core, ScrollTrigger, SplitText). No CDN needed.
+- `assets/motion.css`: Lenis base CSS, header shadow, scroll progress bar.
+- `assets/motion.js`: Lenis smooth scroll (with header-offset anchor links), hero intro with line-by-line headline reveal, staggered scroll reveals, count-up stats, magnetic CTA buttons on desktop.
+
+Visitors with "reduce motion" turned on get plain, instant scrolling and no reveals. If the scripts ever fail to load, content still shows after 2.5s. Upload the `assets/` folder together with the HTML files when deploying.
+
 ## Guide delivery (digital product)
 
 When someone buys the $29 guide:
