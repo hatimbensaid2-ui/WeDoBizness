@@ -665,9 +665,12 @@
    ============================================================ */
 const CONFIG = {
   stripe: {
-    guide:  "https://buy.stripe.com/dRm7sE0oH5iI9WicsrgrS01",
-    funnel: "https://buy.stripe.com/00w9AMb3l6mMd8ueAzgrS02",
-    media:  "https://buy.stripe.com/bJedR21sL9yYfgC2RRgrS03"
+    /* Payment Links from the 7ATIM LTD account (acct_1UWYCgRi3HRGubNs).
+       Products: prod_VXdrAtqHiifgTf (guide), prod_VXdrTkSfbArgin (funnel), prod_VXdrZQ029kZj3o (media).
+       Paste each buy.stripe.com URL below once the link is created. */
+    guide:  "",
+    funnel: "",
+    media:  ""
   },
   calendly: "https://calendly.com/agenciaoff/30min",
   clients: {
@@ -746,7 +749,11 @@ function wireClients(){
 }
 function goCheckout(which){
   const url = CONFIG.stripe[which];
-  if(!url || url.indexOf("REPLACE_WITH")!==-1){ alert("Checkout link not set yet."); return; }
+  if(!url || url.indexOf("REPLACE_WITH")!==-1){
+    const apply = document.getElementById("apply");
+    if(apply){ apply.scrollIntoView({behavior:"smooth"}); } else { window.location.href = CONFIG.calendly; }
+    return;
+  }
   window.location.href = url;
 }
 document.querySelectorAll("[data-checkout]").forEach(b=>{ b.addEventListener("click", ()=> goCheckout(b.getAttribute("data-checkout"))); });

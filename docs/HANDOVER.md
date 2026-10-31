@@ -1,10 +1,11 @@
 # WeDoBizness — Project State & Next Steps
 
 ## Live integrations
-- **Stripe** (account "7atim ltd", live mode) — three Payment Links, wired into `index.html` CONFIG:
-  - $29 guide → `https://buy.stripe.com/dRm7sE0oH5iI9WicsrgrS01`
-  - $750 funnel → `https://buy.stripe.com/00w9AMb3l6mMd8ueAzgrS02`
-  - $1,500/mo media buying (subscription) → `https://buy.stripe.com/bJedR21sL9yYfgC2RRgrS03`
+- **Stripe** (7ATIM LTD, `acct_1UWYCgRi3HRGubNs`, live mode). Old links from the previous account were removed. New products:
+  - $29 The Scaling Playbook: `prod_VXdrAtqHiifgTf` / `price_1UWYZmRi3HRGubNsZA9MGDst` (tax inclusive)
+  - $750 Website Funnel Build: `prod_VXdrTkSfbArgin` / `price_1UWYZoRi3HRGubNsqZL3TeYJ` (tax exclusive)
+  - $1,500/mo Media Buying Management: `prod_VXdrZQ029kZj3o` / `price_1UWYZqRi3HRGubNsd4ppPAUw` (recurring, tax exclusive)
+  - Payment Links pending: account activation must finish before cards are available. Then paste the URLs into `CONFIG.stripe` in `index.html` and the two buttons in `offers.html`. Until then the buttons scroll to the Apply/booking section.
 - **Calendly** — `https://calendly.com/agenciaoff/30min`, embedded inline in the Apply section. Renders only on a live http(s) domain.
 - **Hosting** — Hostinger (`public_html`).
 
