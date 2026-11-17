@@ -100,12 +100,32 @@
   }
   ready();
 
+  /* Horizontal client logo marquee, synced with the same GSAP ticker as Lenis. */
+  var logoSection = $('.logos');
+  if (logoSection) {
+    var logoTrack = $('.logo-track', logoSection);
+    if (logoTrack) {
+      var logoLoop = gsap.to(logoTrack, { xPercent: -50, duration: 34, repeat: -1, ease: 'none', paused: true });
+      logoSection.addEventListener('mouseenter', function () { logoLoop.pause(); });
+      logoSection.addEventListener('mouseleave', function () { logoLoop.resume(); });
+      logoSection.addEventListener('focusin', function () { logoLoop.pause(); });
+      logoSection.addEventListener('focusout', function (e) { if (!logoSection.contains(e.relatedTarget)) logoLoop.resume(); });
+      if ('IntersectionObserver' in window) {
+        var logoObserver = new IntersectionObserver(function (entries) {
+          if (entries[0].isIntersecting) logoLoop.resume();
+          else logoLoop.pause();
+        }, { threshold: 0.05 });
+        logoObserver.observe(logoSection);
+      } else logoLoop.play();
+    }
+  }
+
   /* ---------------------------------------------------------------
    * 4. Scroll reveals (batched, staggered)
    * ------------------------------------------------------------- */
   var revealSel = [
     // homepage
-    '.statband .stat', '.logos .logoslot', '.logos .cap',
+    '.statband .stat', '.logos .cap',
     '.problem .wrap > *', '.sec-head', '#method > .wrap > h2', '#method .eyebrow',
     '.mcard', '.offer', '.case', '.rev', '.seo-links',
     '.steroid h2', '.steroid p', '.steroid .btn',
