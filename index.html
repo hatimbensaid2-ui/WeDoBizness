@@ -98,16 +98,17 @@
   .stat .n{font-family:'Archivo';font-weight:900;font-size:clamp(32px,5vw,52px);color:var(--orange);line-height:1}
   .stat .l{font-family:'Inter';font-size:12.5px;color:var(--onbrown-mute);margin-top:8px;letter-spacing:.02em}
 
-  /* logo row */
-  .logos{padding:36px 0 48px;text-align:center}
-  .logos .cap{font-family:'Archivo';font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--stone);margin-bottom:22px}
-  .logorow{display:flex;gap:30px;justify-content:center;flex-wrap:wrap;align-items:center}
-  .logoslot{flex:1 1 0;max-width:150px;min-width:94px;display:inline-flex;align-items:center;justify-content:center;transition:.16s}
-  .logoslot img{max-height:33px;max-width:100%;width:auto;object-fit:contain;opacity:.85;transition:.16s;display:block}
-  @media(max-width:760px){.logorow{gap:18px 26px}.logoslot{max-width:118px;min-width:78px}.logoslot img{max-height:26px}}
-  .logoslot[href]{cursor:pointer}
-  .logoslot[href]:hover{transform:translateY(-2px)}
-  .logoslot[href]:hover img{opacity:1}
+  /* Client logo marquee: two identical groups for a seamless GSAP loop. */
+  .logos{padding:45px 0 53px;text-align:center;overflow:hidden;background:var(--cream)}
+  .logos .cap{font-family:'Archivo';font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--stone);margin-bottom:28px}
+  .logo-viewport{width:100%;overflow:hidden;-webkit-mask-image:linear-gradient(to right,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(to right,transparent,#000 7%,#000 93%,transparent)}
+  .logo-track{display:flex;width:max-content;align-items:center;will-change:transform}
+  .logo-group{display:flex;flex:none;align-items:center;gap:30px;padding-right:30px}
+  .logoslot{flex:0 0 155px;height:76px;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;outline-offset:5px}
+  .logoslot img{display:block;max-width:138px;max-height:43px;width:auto;height:auto;object-fit:contain;opacity:.82;filter:brightness(0) saturate(100%) invert(9%) sepia(27%) saturate(1822%) hue-rotate(340deg) brightness(88%) contrast(103%);transition:filter .25s ease,opacity .25s ease,transform .25s ease}
+  .logoslot[href]:hover img,.logoslot[href]:focus-visible img{opacity:1;transform:scale(1.05);filter:brightness(0) saturate(100%) invert(39%) sepia(92%) saturate(3529%) hue-rotate(348deg) brightness(102%) contrast(103%)}
+  @media(max-width:760px){.logo-group{gap:17px;padding-right:17px}.logoslot{flex-basis:126px;height:66px}.logoslot img{max-width:112px;max-height:36px}}
+  @media(prefers-reduced-motion:reduce){.logo-viewport{-webkit-mask-image:none;mask-image:none}.logo-track{width:100%;transform:none!important}.logo-group{width:100%;flex-wrap:wrap;justify-content:center;gap:12px}.logo-group[aria-hidden="true"]{display:none}.logoslot{flex-basis:130px}}
 
   section{padding:76px 0}
   .sec-head{max-width:62ch}
@@ -388,19 +389,31 @@
 </div>
 
 <!-- CLIENT LOGOS -->
-<div class="logos">
+<section class="logos" aria-label="Brands we have worked with">
   <div class="wrap">
-    <div class="cap">The brands we scale</div>
-    <div class="logorow">
-      <a class="logoslot" data-client="angel-ruche"><img src="assets/clients/angel-ruche.png" alt="Angel Ruche fashion ecommerce client logo" loading="lazy"></a>
-      <a class="logoslot" data-client="sidemerge"><img src="assets/clients/sidemerge.png" alt="SideMerge ecommerce client brand logo" loading="lazy"></a>
-      <a class="logoslot" data-client="italia-design"><img src="assets/clients/italia-design.png" alt="Italia Design furniture ecommerce brand logo" loading="lazy"></a>
-      <a class="logoslot" data-client="jiaming"><img src="assets/clients/jiaming.png" alt="JiaMing menswear ecommerce client logo" loading="lazy"></a>
-      <a class="logoslot" data-client="masolu"><img src="assets/clients/masolu.png" alt="Masolu ecommerce client brand logo" loading="lazy"></a>
-      <a class="logoslot" data-client="55pens"><img src="assets/clients/55pens.png" alt="55PENS ecommerce client brand logo" loading="lazy"></a>
+    <div class="cap">Brands we've worked with</div>
+  </div>
+  <div class="logo-viewport" aria-label="Client brands">
+    <div class="logo-track">
+      <div class="logo-group">
+        <a class="logoslot" data-client="angel-ruche" aria-label="Angel Ruche website"><img src="assets/clients/angel-ruche.png" alt="Angel Ruche logo" loading="lazy" decoding="async"></a>
+        <a class="logoslot" data-client="sidemerge" aria-label="SideMerge website"><img src="assets/clients/sidemerge.png" alt="SideMerge logo" loading="lazy" decoding="async"></a>
+        <a class="logoslot" data-client="italia-design" aria-label="Italia Design website"><img src="assets/clients/italia-design.png" alt="Italia Design logo" loading="lazy" decoding="async"></a>
+        <a class="logoslot" data-client="jiaming" aria-label="JiaMing website"><img src="assets/clients/jiaming.png" alt="JiaMing logo" loading="lazy" decoding="async"></a>
+        <a class="logoslot" data-client="masolu" aria-label="Masolu website"><img src="assets/clients/masolu.png" alt="Masolu logo" loading="lazy" decoding="async"></a>
+        <a class="logoslot" data-client="55pens" aria-label="55PENS website"><img src="assets/clients/55pens.png" alt="55PENS logo" loading="lazy" decoding="async"></a>
+      </div>
+      <div class="logo-group" aria-hidden="true">
+        <a class="logoslot" data-client="angel-ruche" tabindex="-1" aria-label="Angel Ruche website"><img src="assets/clients/angel-ruche.png" alt="Angel Ruche logo" loading="lazy" decoding="async"></a>
+        <a class="logoslot" data-client="sidemerge" tabindex="-1" aria-label="SideMerge website"><img src="assets/clients/sidemerge.png" alt="SideMerge logo" loading="lazy" decoding="async"></a>
+        <a class="logoslot" data-client="italia-design" tabindex="-1" aria-label="Italia Design website"><img src="assets/clients/italia-design.png" alt="Italia Design logo" loading="lazy" decoding="async"></a>
+        <a class="logoslot" data-client="jiaming" tabindex="-1" aria-label="JiaMing website"><img src="assets/clients/jiaming.png" alt="JiaMing logo" loading="lazy" decoding="async"></a>
+        <a class="logoslot" data-client="masolu" tabindex="-1" aria-label="Masolu website"><img src="assets/clients/masolu.png" alt="Masolu logo" loading="lazy" decoding="async"></a>
+        <a class="logoslot" data-client="55pens" tabindex="-1" aria-label="55PENS website"><img src="assets/clients/55pens.png" alt="55PENS logo" loading="lazy" decoding="async"></a>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
 <!-- PROBLEM -->
 <section class="problem">
