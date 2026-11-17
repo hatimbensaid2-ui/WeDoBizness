@@ -99,15 +99,15 @@
   .stat .l{font-family:'Inter';font-size:12.5px;color:var(--onbrown-mute);margin-top:8px;letter-spacing:.02em}
 
   /* Client logo marquee: two identical groups for a seamless GSAP loop. */
-  .logos{padding:45px 0 53px;text-align:center;overflow:hidden;background:var(--cream)}
-  .logos .cap{font-family:'Archivo';font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--stone);margin-bottom:28px}
+  section.logos{padding:22px 0 18px;text-align:center;overflow:hidden;background:var(--cream)}
+  .logos .cap{font-family:'Archivo';font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--stone);margin-bottom:16px}
   .logo-viewport{width:100%;overflow:hidden;-webkit-mask-image:linear-gradient(to right,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(to right,transparent,#000 7%,#000 93%,transparent)}
   .logo-track{display:flex;width:max-content;align-items:center;will-change:transform}
   .logo-group{display:flex;flex:none;align-items:center;gap:30px;padding-right:30px}
-  .logoslot{flex:0 0 155px;height:76px;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;outline-offset:5px}
-  .logoslot img{display:block;max-width:138px;max-height:43px;width:auto;height:auto;object-fit:contain;opacity:.82;filter:brightness(0) saturate(100%) invert(9%) sepia(27%) saturate(1822%) hue-rotate(340deg) brightness(88%) contrast(103%);transition:filter .25s ease,opacity .25s ease,transform .25s ease}
+  .logoslot{flex:0 0 155px;height:52px;display:inline-flex;align-items:center;justify-content:center;text-decoration:none;outline-offset:5px}
+  .logoslot img{display:block;max-width:138px;max-height:34px;width:auto;height:auto;object-fit:contain;opacity:.82;filter:brightness(0) saturate(100%) invert(9%) sepia(27%) saturate(1822%) hue-rotate(340deg) brightness(88%) contrast(103%);transition:filter .25s ease,opacity .25s ease,transform .25s ease}
   .logoslot[href]:hover img,.logoslot[href]:focus-visible img{opacity:1;transform:scale(1.05);filter:brightness(0) saturate(100%) invert(39%) sepia(92%) saturate(3529%) hue-rotate(348deg) brightness(102%) contrast(103%)}
-  @media(max-width:760px){.logo-group{gap:17px;padding-right:17px}.logoslot{flex-basis:126px;height:66px}.logoslot img{max-width:112px;max-height:36px}}
+  @media(max-width:760px){section.logos{padding:18px 0 14px}.logos .cap{margin-bottom:12px}.logo-group{gap:17px;padding-right:17px}.logoslot{flex-basis:120px;height:42px}.logoslot img{max-width:105px;max-height:28px}}
   @media(prefers-reduced-motion:reduce){.logo-viewport{-webkit-mask-image:none;mask-image:none}.logo-track{width:100%;transform:none!important}.logo-group{width:100%;flex-wrap:wrap;justify-content:center;gap:12px}.logo-group[aria-hidden="true"]{display:none}.logoslot{flex-basis:130px}}
 
   section{padding:76px 0}
@@ -166,10 +166,10 @@
   .case .who .mk{font-family:'Archivo';font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--stone);margin-top:4px}
   .case .who p{font-size:13.5px;color:#6b5844;margin-top:12px;line-height:1.5}
   .case .who .clogo{display:inline-flex;align-items:center;height:36px;margin-bottom:8px}
-  .case .who .clogo img{height:36px;max-width:200px;width:auto;object-fit:contain}
+  .case .who .clogo img{height:36px;max-width:200px;width:auto;object-fit:contain;filter:brightness(0) saturate(100%) invert(9%) sepia(27%) saturate(1822%) hue-rotate(340deg) brightness(88%) contrast(103%);opacity:.9;transition:filter .25s ease,opacity .25s ease,transform .25s ease}
   .case .who a.clogo[data-client="italia-design"] img,.case .who a.clogo[data-client="jiaming"] img{height:27px}
   .case .who a.clogo[href]{cursor:pointer;transition:.14s}
-  .case .who a.clogo[href]:hover{opacity:.78}
+  .case .who a.clogo[href]:hover img,.case .who a.clogo[href]:focus-visible img{opacity:1;transform:scale(1.035);filter:brightness(0) saturate(100%) invert(39%) sepia(92%) saturate(3529%) hue-rotate(348deg) brightness(102%) contrast(103%)}
   .ctiles{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
   .ctile{background:var(--sand);border-radius:12px;padding:16px 12px;text-align:center}
   .ctile .n{font-family:'Archivo';font-weight:900;font-size:26px;color:var(--orange);line-height:1}
